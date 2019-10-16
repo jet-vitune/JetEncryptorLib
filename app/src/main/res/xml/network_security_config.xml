@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?><!--
+  ~ /**
+  ~  * Created by Rahul Pawar on 1/29/19 12:35 PM
+  ~  * Copyright (c) 2019 . All rights reserved.
+  ~  * Last modified 1/29/19 12:35 PM
+  ~  */
+  -->
+<network-security-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">114.143.181.228</domain>
+    </domain-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">192.168.1.198</domain>
+    </domain-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">13.233.85.207</domain>
+    </domain-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">100mbapi.publicam.in</domain>
+    </domain-config>
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">d2hzc9jwi3qysf.cloudfront.net</domain>
+    </domain-config>
+
+    <domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">114.143.181.230</domain>
+    </domain-config>
+
+    <!--<domain-config cleartextTrafficPermitted="true">
+        <domain includeSubdomains="true">*.*.*.*</domain>
+    </domain-config>-->
+
+</network-security-config>
