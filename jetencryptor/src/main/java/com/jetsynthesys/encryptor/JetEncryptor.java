@@ -8,8 +8,6 @@ import android.content.pm.Signature;
 import android.os.Build;
 
 import com.jetsynthesys.callback.ApiManager;
-import com.jetsynthesys.callback.RequestModel;
-import com.jetsynthesys.callback.ResponseBody;
 
 import org.json.JSONObject;
 

@@ -1,4 +1,4 @@
-package com.jetsynthesys.callback;
+package com.jetsynthesys.encryptor;
 
 public class RequestModel {
 

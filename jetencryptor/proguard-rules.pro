@@ -29,4 +29,5 @@
 -keep interface com.squareup.okhttp.** { *; }
 -keep class com.jetsynthesys.encryptor.JetEncryptor** { *; }
 -keep class com.jetsynthesys.encryptor.JobListener** { *; }
--keep class com.jetsynthesys.callback** { *; }
+-keep class com.jetsynthesys.encryptor.RequestModel** { *; }
+-keep class com.jetsynthesys.encryptor.ResponseBody** { *; }
