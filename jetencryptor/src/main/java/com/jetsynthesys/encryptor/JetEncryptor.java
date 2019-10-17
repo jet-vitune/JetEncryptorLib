@@ -10,7 +10,6 @@ import android.util.Base64;
 import android.util.Log;
 import android.widget.Toast;
 
-import com.android.volley.RequestQueue;
 import com.google.gson.Gson;
 import com.jetsynthesys.callback.ApiManager;
 
@@ -26,8 +25,10 @@ public class JetEncryptor {
 
     private static final String TAG = "JetEncryptor";
 
-    //private native byte[] init(Context mContext,boolean isSecure,String hostname,int port,String endPoint,String packgeName,String deviceId);
-    private RequestQueue requestQueue;
+    private static final String RSA = "sra";
+    private static final String JWT = "wjt";
+    private static final String CERT = "ecrt";
+    
     protected Gson gson;
     private ResponseModel responseModel;
     private String jwtkey;
@@ -73,7 +74,7 @@ public class JetEncryptor {
 
         try {
             if (sharedPreferences == null)
-                sharedPreferences = mContext.getSharedPreferences("aPMqAPaTR", Context.MODE_PRIVATE);
+                sharedPreferences = mContext.getSharedPreferences("aPMqAPaTRVAJA", Context.MODE_PRIVATE);
 
             if (encryption == null) {
                 encryption = Encryption.getDefault(Encryption.getHashKey(mContext), "Salt", new byte[16]);
@@ -99,7 +100,7 @@ public class JetEncryptor {
 
         try {
             if (sharedPreferences == null)
-                sharedPreferences = mContext.getSharedPreferences("aPMqAPaTR", Context.MODE_PRIVATE);
+                sharedPreferences = mContext.getSharedPreferences("aPMqAPaTRVAJA", Context.MODE_PRIVATE);
 
             if (encryption == null) {
                 encryption = Encryption.getDefault(Encryption.getHashKey(mContext), "Salt", new byte[16]);
@@ -143,7 +144,7 @@ public class JetEncryptor {
 
         try {
             if (sharedPreferences == null)
-                sharedPreferences = mContext.getSharedPreferences("aPMqAPaTR", Context.MODE_PRIVATE);
+                sharedPreferences = mContext.getSharedPreferences("aPMqAPaTRVAJA", Context.MODE_PRIVATE);
 
             if (encryption == null) {
                 encryption = Encryption.getDefault(Encryption.getHashKey(mContext), "Salt", new byte[16]);
@@ -167,7 +168,7 @@ public class JetEncryptor {
 
         try {
             if (sharedPreferences == null)
-                sharedPreferences = mContext.getSharedPreferences("aPMqAPaTR", Context.MODE_PRIVATE);
+                sharedPreferences = mContext.getSharedPreferences("aPMqAPaTRVAJA", Context.MODE_PRIVATE);
 
             if (encryption == null) {
                 encryption = Encryption.getDefault(Encryption.getHashKey(mContext), "Salt", new byte[16]);
@@ -403,7 +404,7 @@ public class JetEncryptor {
 
             try {
                 if (sharedPreferences == null)
-                    sharedPreferences = mContext.getSharedPreferences("aPMqAPaTR", Context.MODE_PRIVATE);
+                    sharedPreferences = mContext.getSharedPreferences("aPMqAPaTRVAJA", Context.MODE_PRIVATE);
 
                 if (encryption == null) {
                     encryption = Encryption.getDefault(Encryption.getHashKey(mContext), "Salt", new byte[16]);
@@ -431,13 +432,13 @@ public class JetEncryptor {
         isInilized = inilized;
     }
 
-    public String getRSAPubKey() {
+    protected String getRSAPubKey() {
         if (rsaKey != null && !rsaKey.isEmpty()) {
             return rsaKey;
         } else {
             if (sharedPreferences != null) {
                 try {
-                    String decryptedRsaKey = encryption.decrypt(sharedPreferences.getString("rsaKey", ""));
+                    String decryptedRsaKey = encryption.decrypt(sharedPreferences.getString(JetEncryptor.RSA, ""));
                     return decryptedRsaKey;
                 } catch (Exception e) {
                     Log.e(TAG, "getRSAPubKey: ", e);
@@ -449,17 +450,17 @@ public class JetEncryptor {
         }
     }
 
-    public String getRsaKey() {
+    protected String getRsaKey() {
 
         if (rsaKey != null && !rsaKey.isEmpty()) {
             return rsaKey;
         } else {
             if (sharedPreferences != null) {
                 try {
-                    String decryptedRsaKey = encryption.decrypt(sharedPreferences.getString("rsaKey", ""));
+                    String decryptedRsaKey = encryption.decrypt(sharedPreferences.getString(JetEncryptor.RSA, ""));
                     return decryptedRsaKey;
                 } catch (Exception e) {
-                    Log.e(TAG, "getRsaKey: ", e);
+                    Log.e(TAG, "getrsa: ", e);
                     return "";
                 }
             } else {
@@ -468,14 +469,14 @@ public class JetEncryptor {
         }
     }
 
-    private void setRsaKey(String rsaKey) {
+    protected void setRsaKey(String rsaKey) {
 
         this.rsaKey = rsaKey;
 
         try {
             String encryptedRsaKey = encryption.encrypt(rsaKey);
             if (sharedPreferences != null)
-                sharedPreferences.edit().putString("rsaKey", encryptedRsaKey).apply();
+                sharedPreferences.edit().putString(JetEncryptor.RSA, encryptedRsaKey).apply();
         } catch (Exception e) {
         }
     }
@@ -487,7 +488,7 @@ public class JetEncryptor {
         } else {
             if (sharedPreferences != null) {
                 try {
-                    String decryptedJwtKey = encryption.decrypt(sharedPreferences.getString("jwtkey", ""));
+                    String decryptedJwtKey = encryption.decrypt(sharedPreferences.getString(JetEncryptor.JWT, ""));
                     return decryptedJwtKey;
                 } catch (Exception e) {
                     Log.e(TAG, "getJwtkey: ", e);
@@ -499,14 +500,14 @@ public class JetEncryptor {
         }
     }
 
-    private void setJwtkey(String jwtkey) {
+    public void setJwtkey(String jwtkey) {
 
         this.jwtkey = jwtkey;
 
         try {
             String enCryptedjwtkey = encryption.encrypt(jwtkey);
             if (sharedPreferences != null)
-                sharedPreferences.edit().putString("jwtkey", enCryptedjwtkey).apply();
+                sharedPreferences.edit().putString(JetEncryptor.JWT, enCryptedjwtkey).apply();
         } catch (Exception e) {
             Log.e(TAG, "setJwtkey: ", e);
         }
@@ -519,7 +520,7 @@ public class JetEncryptor {
         } else {
             if (sharedPreferences != null) {
                 try {
-                    String decryptedCert = encryption.decrypt(sharedPreferences.getString("cert", ""));
+                    String decryptedCert = encryption.decrypt(sharedPreferences.getString(JetEncryptor.CERT, ""));
                     return decryptedCert;
                 } catch (Exception e) {
                     Log.e(TAG, "getCertKey: ", e);
@@ -532,14 +533,14 @@ public class JetEncryptor {
     }
 
 
-    private void setCert(String cert) {
+    public void setCert(String cert) {
 
         this.cert = cert;
 
         try {
             String encryptedCert = encryption.encrypt(cert);
             if (sharedPreferences != null)
-                sharedPreferences.edit().putString("cert", encryptedCert).apply();
+                sharedPreferences.edit().putString(JetEncryptor.CERT, encryptedCert).apply();
         } catch (Exception e) {
             Log.e(TAG, "setCert: ", e);
         }
