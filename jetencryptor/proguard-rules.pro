@@ -19,3 +19,14 @@
 # If you keep the line number information, uncomment this to
 # hide the original source file name.
 #-renamesourcefileattribute SourceFile
+
+-keepattributes Signature
+
+# For using GSON @Expose annotation
+-keepattributes *Annotation*
+
+-keep class com.squareup.okhttp.** { *; }
+-keep interface com.squareup.okhttp.** { *; }
+-keep class com.jetsynthesys.encryptor.JetEncryptor** { *; }
+-keep class com.jetsynthesys.encryptor.JobListener** { *; }
+-keep class com.jetsynthesys.callback** { *; }

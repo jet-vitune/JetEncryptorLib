@@ -113,7 +113,7 @@ public class Encryption {
             byte[] dataBytesDecrypted = (cipher.doFinal(dataBytes));
             return new String(dataBytesDecrypted);
         } catch (Exception e) {
-            Log.e("Encryption", e.toString());
+            //Log.e("Encryption", e.toString());
         }
 
         return data;
@@ -136,7 +136,7 @@ public class Encryption {
                 decrypted = new String(dataBytesDecrypted);
 
             } catch (Exception e) {
-                Log.e("Encryption: ", e.toString());
+                //Log.e("Encryption: ", e.toString());
             }
         }
         if (decrypted.isEmpty()) {
@@ -347,7 +347,7 @@ public class Encryption {
                     md.update(signature.toByteArray());
                     final String signatureBase64 = new String(Base64.encode(md.digest(), Base64.DEFAULT));
 
-                    Log.e(TAG, "getHashKey HashKey >=28: " + signatureBase64);
+                    //Log.e(TAG, "getHashKey HashKey >=28: " + signatureBase64);
 
                     return signatureBase64.replace("\n", "");
                 }
@@ -360,7 +360,7 @@ public class Encryption {
                     hashKey = hashKey.replace("\n", "");
                     hashKeySet.add(hashKey);
 
-                    Log.e(TAG, "getHashKey HashKey >=28: " + hashKeySet.get(0));
+                    //Log.e(TAG, "getHashKey HashKey >=28: " + hashKeySet.get(0));
 
                     return hashKeySet.get(0);
                 }
@@ -368,7 +368,7 @@ public class Encryption {
 
 
         } catch (Exception e) {
-            Log.e(TAG, e.toString());
+            //Log.e(TAG, e.toString());
         }
         return "";
     }

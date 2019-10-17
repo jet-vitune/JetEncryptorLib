@@ -7,7 +7,6 @@ package com.jetsynthesys.encryptor;
  *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
  *
  */
-
 public interface JobListener {
 
     void workStarted(int workid);

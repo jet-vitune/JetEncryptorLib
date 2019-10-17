@@ -11,9 +11,6 @@
 package com.jetsynthesys.callback;
 
 
-import com.jetsynthesys.encryptor.RequestModel;
-import com.jetsynthesys.encryptor.ResponseBody;
-
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.Header;

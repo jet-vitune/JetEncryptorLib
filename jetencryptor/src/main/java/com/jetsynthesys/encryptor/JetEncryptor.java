@@ -6,17 +6,12 @@ import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Build;
-import android.util.Base64;
-import android.util.Log;
-import android.widget.Toast;
 
-import com.google.gson.Gson;
 import com.jetsynthesys.callback.ApiManager;
+import com.jetsynthesys.callback.RequestModel;
+import com.jetsynthesys.callback.ResponseBody;
 
 import org.json.JSONObject;
-
-import java.util.HashMap;
-import java.util.Map;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -28,9 +23,7 @@ public class JetEncryptor {
     private static final String RSA = "sra";
     private static final String JWT = "wjt";
     private static final String CERT = "ecrt";
-    
-    protected Gson gson;
-    private ResponseModel responseModel;
+
     private String jwtkey;
     private String rsaKey;
     private String cert;
@@ -80,7 +73,7 @@ public class JetEncryptor {
                 encryption = Encryption.getDefault(Encryption.getHashKey(mContext), "Salt", new byte[16]);
             }
         } catch (Exception e) {
-            Log.e(TAG, "initialize: ", e);
+            //Log.e(TAG, "initialize: ", e);
         }
 
 
@@ -106,7 +99,7 @@ public class JetEncryptor {
                 encryption = Encryption.getDefault(Encryption.getHashKey(mContext), "Salt", new byte[16]);
             }
         } catch (Exception e) {
-            Log.e(TAG, "initialize: ", e);
+            //Log.e(TAG, "initialize: ", e);
         }
 
         if (isSecure) {
@@ -150,7 +143,7 @@ public class JetEncryptor {
                 encryption = Encryption.getDefault(Encryption.getHashKey(mContext), "Salt", new byte[16]);
             }
         } catch (Exception e) {
-            Log.e(TAG, "initialize: ", e);
+            //Log.e(TAG, "initialize: ", e);
         }
 
         if (isSecure) {
@@ -174,7 +167,7 @@ public class JetEncryptor {
                 encryption = Encryption.getDefault(Encryption.getHashKey(mContext), "Salt", new byte[16]);
             }
         } catch (Exception e) {
-            Log.e(TAG, "initialize: ", e);
+            //Log.e(TAG, "initialize: ", e);
         }
 
         if (isSecure) {
@@ -259,7 +252,7 @@ public class JetEncryptor {
                 try {
                     mJobListener.onworkError(t.toString());
                 } catch (Exception e) {
-                    Log.e(TAG, "onFailure: ", e);
+                    //Log.e(TAG, "onFailure: ", e);
                 }
             }
         });
@@ -337,7 +330,7 @@ public class JetEncryptor {
                 try {
                     mJobListener.onworkError(t.toString());
                 } catch (Exception e) {
-                    Log.e(TAG, "onFailure: ", e);
+                    //Log.e(TAG, "onFailure: ", e);
                 }
             }
         });
@@ -410,12 +403,12 @@ public class JetEncryptor {
                     encryption = Encryption.getDefault(Encryption.getHashKey(mContext), "Salt", new byte[16]);
                 }
             } catch (Exception e) {
-                Log.e(TAG, "initialize: ", e);
+                //Log.e(TAG, "initialize: ", e);
             }
 
             return JavaEncrypt.getData(mContext, inputdata, getRsaKey());
         } else {
-            Log.e(TAG, "RSA Key is Null or Empty");
+            //Log.e(TAG, "RSA Key is Null or Empty");
             return "";
         }
     }
@@ -441,7 +434,7 @@ public class JetEncryptor {
                     String decryptedRsaKey = encryption.decrypt(sharedPreferences.getString(JetEncryptor.RSA, ""));
                     return decryptedRsaKey;
                 } catch (Exception e) {
-                    Log.e(TAG, "getRSAPubKey: ", e);
+                    //Log.e(TAG, "getRSAPubKey: ", e);
                     return "";
                 }
             } else {
@@ -460,7 +453,7 @@ public class JetEncryptor {
                     String decryptedRsaKey = encryption.decrypt(sharedPreferences.getString(JetEncryptor.RSA, ""));
                     return decryptedRsaKey;
                 } catch (Exception e) {
-                    Log.e(TAG, "getrsa: ", e);
+                    //Log.e(TAG, "getrsa: ", e);
                     return "";
                 }
             } else {
@@ -491,7 +484,7 @@ public class JetEncryptor {
                     String decryptedJwtKey = encryption.decrypt(sharedPreferences.getString(JetEncryptor.JWT, ""));
                     return decryptedJwtKey;
                 } catch (Exception e) {
-                    Log.e(TAG, "getJwtkey: ", e);
+                    //Log.e(TAG, "getJwtkey: ", e);
                     return "";
                 }
             } else {
@@ -509,7 +502,7 @@ public class JetEncryptor {
             if (sharedPreferences != null)
                 sharedPreferences.edit().putString(JetEncryptor.JWT, enCryptedjwtkey).apply();
         } catch (Exception e) {
-            Log.e(TAG, "setJwtkey: ", e);
+            //Log.e(TAG, "setJwtkey: ", e);
         }
     }
 
@@ -523,7 +516,7 @@ public class JetEncryptor {
                     String decryptedCert = encryption.decrypt(sharedPreferences.getString(JetEncryptor.CERT, ""));
                     return decryptedCert;
                 } catch (Exception e) {
-                    Log.e(TAG, "getCertKey: ", e);
+                    //Log.e(TAG, "getCertKey: ", e);
                     return "";
                 }
             } else {
@@ -542,7 +535,7 @@ public class JetEncryptor {
             if (sharedPreferences != null)
                 sharedPreferences.edit().putString(JetEncryptor.CERT, encryptedCert).apply();
         } catch (Exception e) {
-            Log.e(TAG, "setCert: ", e);
+            //Log.e(TAG, "setCert: ", e);
         }
     }
 

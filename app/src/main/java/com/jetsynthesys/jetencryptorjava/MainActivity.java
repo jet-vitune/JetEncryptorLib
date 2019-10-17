@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity implements JobListener{
         String data = jetEncryptor.getInstance().processData(MainActivity.this, requestObject.toString());
 
 
-        Log.e("EEEEEE", " Encrypted Data " + data);
+        //Log.e("EEEEEE", " Encrypted Data " + data);
 
 
     }
@@ -94,24 +94,24 @@ public class MainActivity extends AppCompatActivity implements JobListener{
     @Override
     public void workStarted(int workid) {
 
-        Log.e(TAG, "workStarted: "+workid);
+        //Log.e(TAG, "workStarted: "+workid);
     }
 
     @Override
     public void workFinished(int workid) {
 
-        Log.e(TAG, "workFinished: "+workid);
+        //Log.e(TAG, "workFinished: "+workid);
     }
 
     @Override
     public void workResult(String Result) {
 
-        Log.e(TAG, "workResult: "+Result);
+        //Log.e(TAG, "workResult: "+Result);
     }
 
     @Override
     public void onworkError(String error) {
 
-        Log.e(TAG, "onworkError: "+error);
+        //Log.e(TAG, "onworkError: "+error);
     }
 }

@@ -10,15 +10,26 @@ android {
         versionCode 1
         versionName "1.0"
 
-        consumerProguardFiles 'proguard-project.txt'
+        consumerProguardFiles 'proguard-rules.pro'
     }
 
     buildTypes {
         release {
-            //minifyEnabled false
-            //proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+         /*   minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'*/
+
+            minifyEnabled true
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            debuggable false
+            jniDebuggable false
+            zipAlignEnabled true
         }
     }
+
+    // default build flavour
+    defaultPublishConfig "release"
+    // true to publish all flavour artifacts
+    publishNonDefault true
 
 }
 
