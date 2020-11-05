@@ -31,3 +31,4 @@
 -keep class com.jetsynthesys.encryptor.JobListener** { *; }
 -keep class com.jetsynthesys.encryptor.RequestModel** { *; }
 -keep class com.jetsynthesys.encryptor.ResponseBody** { *; }
+-keep class com.jetsynthesys.encryptor.WakauResponseBody** { *; }
