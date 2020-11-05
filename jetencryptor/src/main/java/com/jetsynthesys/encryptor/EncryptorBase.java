@@ -18,10 +18,12 @@ public class EncryptorBase {
     public static final String RSA = "sra";
     public static final String JWT = "wjt";
     public static final String CERT = "ecrt";
+    public static final String API_HASH_KEY = "wertecrt";
 
     protected String jwtkey;
     protected String rsaKey;
     protected String cert;
+    protected String apiHashKey;
     protected boolean isInilized = false;
 
     protected Call<ResponseBody> responseBodyCall;
@@ -230,6 +232,10 @@ public class EncryptorBase {
 
                         if (responseBody.getData().getCert() != null) {
                             setCert(responseBody.getData().getCert());
+                        }
+
+                        if (responseBody.getData().getApiHashKey() != null) {
+                            setApiHashKey(responseBody.getData().getApiHashKey());
                         }
 
 
@@ -460,6 +466,19 @@ public class EncryptorBase {
             String encryptedCert = encryption.encrypt(cert);
             if (sharedPreferences != null)
                 sharedPreferences.edit().putString(EncryptorBase.CERT, encryptedCert).apply();
+        } catch (Exception e) {
+            //Log.e(TAG, "setCert: ", e);
+        }
+    }
+
+    public void setApiHashKey(String apiHashKey) {
+
+        this.apiHashKey = apiHashKey;
+
+        try {
+            String encryptedCert = encryption.encrypt(apiHashKey);
+            if (sharedPreferences != null)
+                sharedPreferences.edit().putString(EncryptorBase.API_HASH_KEY, encryptedCert).apply();
         } catch (Exception e) {
             //Log.e(TAG, "setCert: ", e);
         }

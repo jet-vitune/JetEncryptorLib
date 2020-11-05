@@ -68,6 +68,7 @@ public class ResponseBody {
         private String jwt;
         private String key;
         private String cert;
+        private String apiHashKey;
 
         public String getJwt() {
             return jwt;
@@ -91,6 +92,14 @@ public class ResponseBody {
 
         public void setCert(String cert) {
             this.cert = cert;
+        }
+
+        public String getApiHashKey() {
+            return apiHashKey;
+        }
+
+        public void setApiHashKey(String apiHashKey) {
+            this.apiHashKey = apiHashKey;
         }
     }
 }

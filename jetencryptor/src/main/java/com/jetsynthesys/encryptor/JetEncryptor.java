@@ -176,4 +176,22 @@ public class JetEncryptor {
         }
     }
 
+    public String getApiHashKey() {
+        if (EncryptorBase.getInstance().apiHashKey != null && !EncryptorBase.getInstance().apiHashKey.isEmpty()) {
+            return EncryptorBase.getInstance().apiHashKey;
+        } else {
+            if (EncryptorBase.getInstance().sharedPreferences != null) {
+                try {
+                    String decryptedApiHashKey = EncryptorBase.getInstance().encryption.decrypt(EncryptorBase.getInstance().sharedPreferences.getString(EncryptorBase.API_HASH_KEY, ""));
+                    return decryptedApiHashKey;
+                } catch (Exception e) {
+                    //Log.e(TAG, "getCertKey: ", e);
+                    return "";
+                }
+            } else {
+                return "";
+            }
+        }
+    }
+
 }
