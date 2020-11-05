@@ -28,13 +28,13 @@ public class EncryptorBase {
     protected SharedPreferences sharedPreferences;
     private static EncryptorBase jetEncryptorBase;
 
-    public EncryptorBase(){
+    public EncryptorBase() {
 
     }
 
-    public static EncryptorBase getInstance(){
+    public static EncryptorBase getInstance() {
 
-        if(jetEncryptorBase == null){
+        if (jetEncryptorBase == null) {
             jetEncryptorBase = new EncryptorBase();
         }
         return jetEncryptorBase;
@@ -72,7 +72,7 @@ public class EncryptorBase {
                 encryption = Encryption.getDefault(Encryption.getHashKey(mContext), "Salt", new byte[16]);
             }
         } catch (Exception e) {
-            //Log.e(TAG, "initialize: ", e);
+
         }
 
         if (isSecure) {
@@ -103,6 +103,107 @@ public class EncryptorBase {
                         getPackageHash(mContext),
                         deviceId,
                         packageName,
+                        requestModel);
+
+        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+                try {
+
+                    ResponseBody responseBody = response.body();
+
+                    if (responseBody.getCode() == 200) {
+
+                        if (responseBody.getData().getKey() != null) {
+                            setRsaKey(responseBody.getData().getKey());
+                        }
+
+                        if (responseBody.getData().getJwt() != null) {
+
+                            setJwtkey(responseBody.getData().getJwt());
+                        }
+
+                        if (responseBody.getData().getCert() != null) {
+                            setCert(responseBody.getData().getCert());
+                        }
+
+
+                        setInilized(true);
+                        mJobListener.workFinished(100);
+                        try {
+                            mJobListener.workResult(responseBody.getMessage());
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                    } else {
+                        //TODO
+                        mJobListener.onworkError("Message: " + responseBody.getMessage() + " Code: " + responseBody.getCode());
+                    }
+
+                } catch (Exception e) {
+                    mJobListener.onworkError(e.toString());
+                }
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable t) {
+                try {
+                    mJobListener.onworkError(t.toString());
+                } catch (Exception e) {
+                    //Log.e(TAG, "onFailure: ", e);
+                }
+            }
+        });
+
+    }
+
+    public void initLibForWakau(final Context mContext,
+                                final String packageName,
+                                final String deviceId,
+                                final JobListener mJobListener,
+                                final boolean isSecure,
+                                final String hostname,
+                                final String shaKey) {
+
+        try {
+            if (sharedPreferences == null)
+                sharedPreferences = mContext.getSharedPreferences("aPMqAPaTRVAJA", Context.MODE_PRIVATE);
+
+            if (encryption == null) {
+                encryption = Encryption.getDefault(Encryption.getHashKey(mContext), "Salt", new byte[16]);
+            }
+        } catch (Exception e) {
+
+        }
+
+        if (isSecure) {
+            url = "https://" + hostname + "/";
+        } else {
+            url = "http://" + hostname + "/";
+        }
+
+        mJobListener.workStarted(100);
+
+        RequestModel requestModel = new RequestModel();
+        RequestModel.LocaleBean localeBean = new RequestModel.LocaleBean();
+
+        localeBean.setCountry("IN");
+        localeBean.setPlatform("android");
+        localeBean.setVersion(BuildConfig.VERSION_NAME);
+        localeBean.setVersion_code(BuildConfig.VERSION_CODE);
+        localeBean.setLanguage("en");
+        localeBean.setSegment("");
+        localeBean.setDevice("" + Build.MANUFACTURER);
+        localeBean.setModel("" + Build.DEVICE);
+
+        requestModel.setLocale(localeBean);
+
+        responseBodyCall = ApiManager.getApiInstance(url, mContext).
+                getEncryptorDataWakau("application/json",
+                        Java_AES_Cipher.encrypt(shaKey, Java_AES_Cipher.getIV(),getPackageHash(mContext)),
+                        Java_AES_Cipher.encrypt(shaKey, Java_AES_Cipher.getIV(),deviceId),
+                        Java_AES_Cipher.encrypt(shaKey, Java_AES_Cipher.getIV(),packageName),
                         requestModel);
 
         responseBodyCall.enqueue(new Callback<ResponseBody>() {

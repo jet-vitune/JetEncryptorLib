@@ -36,6 +36,27 @@ public class JetEncryptor {
         return 0;
     }
 
+    public int initEncryptorForWakau(Context mContext,
+                                     final JobListener mJobListener,
+                                     boolean isSecure,
+                                     String hostname,
+                                     int port,
+                                     String endPoint,
+                                     String packgeName,
+                                     String deviceId,
+                                     String encryptionKey) {
+
+        EncryptorBase.getInstance().initLibForWakau(mContext,
+                packgeName,
+                deviceId,
+                mJobListener,
+                isSecure,
+                hostname,
+                encryptionKey);
+
+        return 0;
+    }
+
     public int initInBackgroundWithJetEngage(Context mContext,
                                              final JobListener mJobListener,
                                              boolean isSecure,
@@ -76,6 +97,10 @@ public class JetEncryptor {
     public boolean isInilized() {
 
         return EncryptorBase.getInstance().isInilized;
+    }
+
+    public void updateJwtToken(String token){
+        EncryptorBase.getInstance().setJwtkey(token);
     }
 
     protected String getRSAPubKey() {
