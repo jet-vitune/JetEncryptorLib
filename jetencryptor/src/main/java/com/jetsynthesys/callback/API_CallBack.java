@@ -29,7 +29,7 @@ public interface API_CallBack {
                                         @Body RequestModel requestModel);
 
     @POST("auth/token")
-    Call<ResponseBody> getEncryptorDataWakau(@Header("Content-Type") String content_type,
+    Call<String> getEncryptorDataWakau(@Header("Content-Type") String content_type,
                                         @Header("PARAM_3") String app_signature,
                                         @Header("PARAM_1") String device_id,
                                         @Header("PARAM_2") String package_name,

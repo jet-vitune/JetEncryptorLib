@@ -6,6 +6,7 @@ import android.content.pm.PackageManager;
 import android.content.pm.Signature;
 import android.os.Build;
 
+import com.google.gson.Gson;
 import com.jetsynthesys.callback.ApiManager;
 
 import retrofit2.Call;
@@ -24,6 +25,7 @@ public class EncryptorBase {
     protected boolean isInilized = false;
 
     protected Call<ResponseBody> responseBodyCall;
+    protected Call<String> responseBodyCallWakau;
     protected Encryption encryption;
     protected SharedPreferences sharedPreferences;
     private static EncryptorBase jetEncryptorBase;
@@ -199,19 +201,21 @@ public class EncryptorBase {
 
         requestModel.setLocale(localeBean);
 
-        responseBodyCall = ApiManager.getApiInstance(url, mContext).
+        responseBodyCallWakau = ApiManager.getApiInstance(url, mContext).
                 getEncryptorDataWakau("application/json",
                         Java_AES_Cipher.encrypt(shaKey, Java_AES_Cipher.getIV(),getPackageHash(mContext)),
                         Java_AES_Cipher.encrypt(shaKey, Java_AES_Cipher.getIV(),deviceId),
                         Java_AES_Cipher.encrypt(shaKey, Java_AES_Cipher.getIV(),packageName),
                         requestModel);
 
-        responseBodyCall.enqueue(new Callback<ResponseBody>() {
+        responseBodyCallWakau.enqueue(new Callback<String>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, retrofit2.Response<ResponseBody> response) {
+            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
                 try {
 
-                    ResponseBody responseBody = response.body();
+                    String encryptedResponse = response.body();
+                    String decryptedResponse = Java_AES_Cipher.decrypt(shaKey, encryptedResponse);
+                    ResponseBody responseBody =  new Gson().fromJson(decryptedResponse, ResponseBody.class);
 
                     if (responseBody.getCode() == 200) {
 
@@ -248,7 +252,7 @@ public class EncryptorBase {
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable t) {
+            public void onFailure(Call<String> call, Throwable t) {
                 try {
                     mJobListener.onworkError(t.toString());
                 } catch (Exception e) {
@@ -365,6 +369,12 @@ public class EncryptorBase {
 
             responseBodyCall.cancel();
             responseBodyCall = null;
+        }
+
+        if (responseBodyCallWakau != null && !responseBodyCallWakau.isCanceled()) {
+
+            responseBodyCallWakau.cancel();
+            responseBodyCallWakau = null;
         }
     }
 
