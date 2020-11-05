@@ -13,6 +13,7 @@ package com.jetsynthesys.callback;
 
 import com.jetsynthesys.encryptor.RequestModel;
 import com.jetsynthesys.encryptor.ResponseBody;
+import com.jetsynthesys.encryptor.WakauResponseBody;
 
 import retrofit2.Call;
 import retrofit2.http.Body;
@@ -29,11 +30,11 @@ public interface API_CallBack {
                                         @Body RequestModel requestModel);
 
     @POST("auth/token")
-    Call<String> getEncryptorDataWakau(@Header("Content-Type") String content_type,
-                                        @Header("PARAM_3") String app_signature,
-                                        @Header("PARAM_1") String device_id,
-                                        @Header("PARAM_2") String package_name,
-                                        @Body RequestModel requestModel);
+    Call<WakauResponseBody> getEncryptorDataWakau(@Header("Content-Type") String content_type,
+                                                  @Header("PARAM_3") String app_signature,
+                                                  @Header("PARAM_1") String device_id,
+                                                  @Header("PARAM_2") String package_name,
+                                                  @Body RequestModel requestModel);
 
     @POST("api/v1/Auth/get")
     Call<ResponseBody> getEncryptorDataJetEngage(@Header("Content-Type") String content_type,

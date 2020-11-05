@@ -25,7 +25,7 @@ public class EncryptorBase {
     protected boolean isInilized = false;
 
     protected Call<ResponseBody> responseBodyCall;
-    protected Call<String> responseBodyCallWakau;
+    protected Call<WakauResponseBody> responseBodyCallWakau;
     protected Encryption encryption;
     protected SharedPreferences sharedPreferences;
     private static EncryptorBase jetEncryptorBase;
@@ -208,13 +208,13 @@ public class EncryptorBase {
                         Java_AES_Cipher.encrypt(shaKey, Java_AES_Cipher.getIV(),packageName),
                         requestModel);
 
-        responseBodyCallWakau.enqueue(new Callback<String>() {
+        responseBodyCallWakau.enqueue(new Callback<WakauResponseBody>() {
             @Override
-            public void onResponse(Call<String> call, retrofit2.Response<String> response) {
+            public void onResponse(Call<WakauResponseBody> call, retrofit2.Response<WakauResponseBody> response) {
                 try {
 
-                    String encryptedResponse = response.body();
-                    String decryptedResponse = Java_AES_Cipher.decrypt(shaKey, encryptedResponse);
+                    WakauResponseBody encryptedResponse = response.body();
+                    String decryptedResponse = Java_AES_Cipher.decrypt(shaKey, encryptedResponse.getData());
                     ResponseBody responseBody =  new Gson().fromJson(decryptedResponse, ResponseBody.class);
 
                     if (responseBody.getCode() == 200) {
@@ -252,7 +252,7 @@ public class EncryptorBase {
             }
 
             @Override
-            public void onFailure(Call<String> call, Throwable t) {
+            public void onFailure(Call<WakauResponseBody> call, Throwable t) {
                 try {
                     mJobListener.onworkError(t.toString());
                 } catch (Exception e) {
