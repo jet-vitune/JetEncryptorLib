@@ -10,7 +10,7 @@ android {
         versionCode 1
         versionName "1.0"
 
-        //consumerProguardFiles 'proguard-rules.pro'
+        consumerProguardFiles 'proguard-rules.pro'
     }
 
     buildTypes {
@@ -18,11 +18,11 @@ android {
          /*   minifyEnabled false
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'*/
 
-           /* minifyEnabled true
+            minifyEnabled true
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
             debuggable false
             jniDebuggable false
-            zipAlignEnabled true*/
+            zipAlignEnabled true
         }
     }
 
