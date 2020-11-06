@@ -208,6 +208,7 @@ public class EncryptorBase {
                         Java_AES_Cipher.encrypt(shaKey, Java_AES_Cipher.getIV(),getPackageHash(mContext)),
                         Java_AES_Cipher.encrypt(shaKey, Java_AES_Cipher.getIV(),deviceId),
                         Java_AES_Cipher.encrypt(shaKey, Java_AES_Cipher.getIV(),packageName),
+                        "",
                         requestModel);
 
         responseBodyCallWakau.enqueue(new Callback<WakauResponseBody>() {

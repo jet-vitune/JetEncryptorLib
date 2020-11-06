@@ -34,6 +34,7 @@ public interface API_CallBack {
                                                   @Header("PARAM_3") String app_signature,
                                                   @Header("PARAM_1") String device_id,
                                                   @Header("PARAM_2") String package_name,
+                                                  @Header("PARAM_4") String requestType,
                                                   @Body RequestModel requestModel);
 
     @POST("api/v1/Auth/get")
