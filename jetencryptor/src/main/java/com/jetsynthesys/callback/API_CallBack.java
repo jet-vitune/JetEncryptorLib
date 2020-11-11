@@ -31,10 +31,10 @@ public interface API_CallBack {
 
     @POST("auth/token")
     Call<WakauResponseBody> getEncryptorDataWakau(@Header("Content-Type") String content_type,
-                                                  @Header("PARAM_3") String app_signature,
-                                                  @Header("PARAM_1") String device_id,
-                                                  @Header("PARAM_2") String package_name,
-                                                  @Header("PARAM_4") String requestType,
+                                                  @Header("PARAM-3") String app_signature,
+                                                  @Header("PARAM-1") String device_id,
+                                                  @Header("PARAM-2") String package_name,
+                                                  @Header("PARAM-4") String requestType,
                                                   @Body RequestModel requestModel);
 
     @POST("api/v1/Auth/get")
