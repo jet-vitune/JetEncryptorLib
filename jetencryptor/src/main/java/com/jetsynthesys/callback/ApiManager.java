@@ -40,7 +40,7 @@ public class ApiManager {
 
 
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.GINGERBREAD) {
-                httpClient.connectTimeout(5, TimeUnit.SECONDS);
+                httpClient.connectTimeout(30, TimeUnit.SECONDS);
             }
 
             boolean isDebuggable = (0 != (context.getApplicationInfo().flags & context.getApplicationInfo().FLAG_DEBUGGABLE));
